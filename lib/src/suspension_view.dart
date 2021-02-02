@@ -12,6 +12,7 @@ class SuspensionView extends StatefulWidget {
     @required this.data,
     @required this.itemCount,
     @required this.itemBuilder,
+    this.separatorBuilder,
     this.itemScrollController,
     this.itemPositionsListener,
     this.susItemBuilder,
@@ -30,6 +31,8 @@ class SuspensionView extends StatefulWidget {
   /// Called to build children for the list with
   /// 0 <= index < itemCount.
   final IndexedWidgetBuilder itemBuilder;
+
+  final IndexedWidgetBuilder separatorBuilder;
 
   /// Controller for jumping or scrolling to an item.
   final ItemScrollController itemScrollController;
@@ -144,13 +147,23 @@ class _SuspensionViewState extends State<SuspensionView> {
     );
   }
 
+  Widget _separatorBuilder(BuildContext context, int index) {
+    if (widget.separatorBuilder == null) {
+      return Container();
+    } else {
+      return widget.separatorBuilder(context, index);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         widget.itemCount == 0
             ? Container()
-            : ScrollablePositionedList.builder(
+            : ScrollablePositionedList.separated(
+                separatorBuilder: (context, index) =>
+                    _separatorBuilder(context, index),
                 itemCount: widget.itemCount,
                 itemBuilder: (context, index) => _buildItem(context, index),
                 itemScrollController: itemScrollController,

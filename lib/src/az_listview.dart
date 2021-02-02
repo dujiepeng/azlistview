@@ -12,6 +12,7 @@ class AzListView extends StatefulWidget {
     @required this.data,
     @required this.itemCount,
     @required this.itemBuilder,
+    this.separatorBuilder,
     this.itemScrollController,
     this.itemPositionsListener,
     this.physics,
@@ -38,6 +39,8 @@ class AzListView extends StatefulWidget {
   /// Called to build children for the list with
   /// 0 <= index < itemCount.
   final IndexedWidgetBuilder itemBuilder;
+
+  final IndexedWidgetBuilder separatorBuilder;
 
   /// Controller for jumping or scrolling to an item.
   final ItemScrollController itemScrollController;
@@ -182,6 +185,7 @@ class _AzListViewState extends State<AzListView> {
           data: widget.data,
           itemCount: widget.itemCount,
           itemBuilder: widget.itemBuilder,
+          separatorBuilder: widget.separatorBuilder,
           itemScrollController: itemScrollController,
           itemPositionsListener: itemPositionsListener,
           susItemBuilder: widget.susItemBuilder,
